@@ -1,23 +1,30 @@
 import { helper } from './helper.js';
 
-const canvasWidth = 1600;
-const canvasHeight = 800;
-const particleSize = 9;
-const maxX = canvasWidth - particleSize;
-const maxY = canvasHeight - particleSize;
+const canvasWidth = 800;
+const canvasHeight = 400;
+const numParticles = 100;
+const pSize = 5;
+const maxX = canvasWidth - pSize;
+const maxY = canvasHeight - pSize;
+const maxA = 0.5;
+const maxV = 3.0;
 
 const particles = [];
+const distances = [];
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 const init = () => {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < numParticles; i++) {
         particles.push(
         {
-            w: particleSize,
-            h: particleSize,
+            id: i,
+            w: pSize,
+            h: pSize,
             x: Math.trunc(Math.random() * maxX),
             y: Math.trunc(Math.random() * maxY),
+            //x: Math.trunc(canvasWidth/2 + pSize/2),
+            //y: Math.trunc(canvasHeight/2 + pSize/2),
             vx: 0,
             vy: 0,
             ax: 0,
@@ -38,32 +45,65 @@ const clear = () => {
     })
 };
 
-const move = () => {
-    
+const computeA = (p) => {
+    distances.length = 0;
+    particles.forEach(n => {
+        if (n.id !== p.id) {
+            distances.push({
+                id: n.id,
+                distance: Math.abs(n.x - p.x) + Math.abs(n.y - p.y)    
+            });
+        }
+    });
+    distances.sort((a,b) => a.distance - b.distance);
+    let targetX = 0;
+    let targetY = 0;
+    let distancesCount = Math.trunc(helper.rnd(5, 10));
+    for (let i = 0; i < distancesCount; i++) {
+        targetX += particles[distances[i].id].x;
+        targetY += particles[distances[i].id].y;
+    }
+    targetX = targetX / distancesCount;
+    targetY = targetY / distancesCount;
+    if (targetX >= p.x) {
+        p.ax = helper.rnd(0, maxA);
+    } else {
+        p.ax = helper.rnd(-maxA, 0);
+    }
+    if (targetY >= p.y) {
+        p.ay = helper.rnd(0, maxA);
+    } else {
+        p.ay = helper.rnd(-maxA, 0);
+    }
+    p.ax += helper.rnd(-1, 1);
+    p.ay += helper.rnd(-1, 1);
+
+};
+
+const move = () => {    
     particles.forEach(p => {
-        p.ax = helper.rnd(-0.5, 0.5);
-        p.ay = helper.rnd(-0.5, 0.5);
+        computeA(p);
         p.vx += p.ax;
         p.vy += p.ay;
-        p.vx = helper.clamp(p.vx, -3, 3);
-        p.vy = helper.clamp(p.vy, -3, 3);
+        p.vx = helper.clamp(p.vx, -maxV, maxV);
+        p.vy = helper.clamp(p.vy, -maxV, maxV);
         p.x += p.vx;
         p.y += p.vy;
         p.x = helper.clamp(p.x, 0, maxX);
         p.y = helper.clamp(p.y, 0, maxY);
         if (p.x === 0) {
-            p.ax = 0.5;
-            p.vx = 3;
+            p.ax = maxA;
+            p.vx = maxV;
         } else if (p.x === maxX) {
-            p.ax = -0.5;
-            p.vx = -3;
+            p.ax = -maxA;
+            p.vx = -maxV;
         }
         if (p.y === 0) {
-            p.ay = 0.5;
-            p.vy = 3;
+            p.ay = maxA;
+            p.vy = maxV;
         } else if (p.y === maxY) {
-            p.ay = -0.5;
-            p.vy = -3;
+            p.ay = -maxA;
+            p.vy = -maxV;
         }
     })
 };
