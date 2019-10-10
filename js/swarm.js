@@ -6,8 +6,8 @@ const numParticles = 100;
 const pSize = 5;
 const maxX = canvasWidth - pSize;
 const maxY = canvasHeight - pSize;
-const maxA = 0.5;
-const maxV = 3.0;
+const maxA = 1;
+const maxV = 3;
 
 const particles = [];
 const distances = [];
@@ -29,13 +29,9 @@ const init = () => {
             vy: 0,
             ax: 0,
             ay: 0,
-            c: {
-                    h: Math.trunc(Math.random() * 360),
-                    s: 100,
-                    l: 25 + Math.trunc(Math.random() * 50)
-                }            
+            c: '#ffffff'
         });
-    }
+    }    
 };
 
 const clear = () => {
@@ -58,26 +54,29 @@ const computeA = (p) => {
     distances.sort((a,b) => a.distance - b.distance);
     let targetX = 0;
     let targetY = 0;
-    let distancesCount = Math.trunc(helper.rnd(5, 10));
+    let distancesCount = Math.trunc(helper.random(5, 25));
     for (let i = 0; i < distancesCount; i++) {
         targetX += particles[distances[i].id].x;
         targetY += particles[distances[i].id].y;
     }
     targetX = targetX / distancesCount;
     targetY = targetY / distancesCount;
+    const ddd = Math.abs(targetX-p.x)+Math.abs(targetY-p.y);
+    p.c = ddd < 50 ? '#11ffcc' : '#ff3333';
     if (targetX >= p.x) {
-        p.ax = helper.rnd(0, maxA);
+        p.ax = helper.random(0, maxA);
     } else {
-        p.ax = helper.rnd(-maxA, 0);
+        p.ax = helper.random(-maxA, 0);
     }
     if (targetY >= p.y) {
-        p.ay = helper.rnd(0, maxA);
+        p.ay = helper.random(0, maxA);
     } else {
-        p.ay = helper.rnd(-maxA, 0);
+        p.ay = helper.random(-maxA, 0);
     }
-    p.ax += helper.rnd(-1, 1);
-    p.ay += helper.rnd(-1, 1);
-
+    p.ax += helper.random(-2, 2);
+    p.ay += helper.random(-2, 2);
+    p.ax = helper.clamp(p.ax, -maxA, maxA);
+    p.ay = helper.clamp(p.ay, -maxA, maxA);
 };
 
 const move = () => {    
@@ -110,7 +109,8 @@ const move = () => {
 
 const draw = () => {
     particles.forEach(p => {
-        ctx.fillStyle = `hsl(${p.c.h}, ${p.c.s}%, ${p.c.l}%)`;
+        //ctx.fillStyle = `hsl(${p.c.h}, ${p.c.s}%, ${p.c.l}%)`;
+        ctx.fillStyle = p.c;
         ctx.fillRect(Math.round(p.x), Math.round(p.y), p.w, p.h);
     })
 };
