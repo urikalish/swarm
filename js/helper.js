@@ -1,11 +1,18 @@
-export const helper = {
-    random: (min, max) => {
+export class Helper {
+
+    static random(min, max) {
         return min + Math.random() * (max-min);
-    },
-    clamp: (val, min, max) => {
+	}
+
+	static randomTrunc(min, max) {
+        return Math.trunc(min + Math.random() * (max-min));
+	}
+	
+    static clamp(val, min, max) {
         return Math.max(min, Math.min(max, val));
-    },
-    strToRgb: (str) => {
+	}
+	
+    static strToRgb(str) {
 		let r = 0, g = 0, b = 0;
 		if (str.charAt(0) === "#") {
 			str = str.substring(1, str.length);
@@ -28,15 +35,17 @@ export const helper = {
 			}
 		}
 		return [r, g, b];
-    },
-    rgbToStr: (r, g, b) => {
+	}
+	
+    static rgbToStr(r, g, b) {
         let str = '#';
         str += r.toString(16).length === 1 ? '0' + r.toString(16): r.toString(16);
         str += g.toString(16).length === 1 ? '0' + g.toString(16): g.toString(16);
         str += b.toString(16).length === 1 ? '0' + b.toString(16): b.toString(16);
         return str;
-    },
-	rgbToHsl: (r, g, b) => {
+	}
+	
+	static rgbToHsl(r, g, b) {
 		r /= 255;
 		g /= 255;
 		b /= 255;
@@ -55,8 +64,9 @@ export const helper = {
 			h /= 6;
 		}
 		return [h, s, l];
-	},
-    hslToRgb: (h, s, l) => {
+	}
+	
+    static hslToRgb(h, s, l) {
 		let r, g, b;
 		if (s == 0){
 			r = g = b = l; // achromatic
@@ -76,5 +86,5 @@ export const helper = {
 			b = hue2rgb(p, q, h - 1/3);
 		}
 		return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
-	},	
+	}
 };
