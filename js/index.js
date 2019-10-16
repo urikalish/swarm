@@ -10,7 +10,7 @@ const initGame = () => {
             {
                 id: 0,
                 name: 'Player0',
-                color: Helper.strToHsl('#00ffcc')
+                color: Helper.strToHsl('#11ffcc')
             },
             {
                 id: 1,
