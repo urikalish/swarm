@@ -3,7 +3,6 @@ import { Helper } from './helper.js';
 const maxA = [1, 1, 1];
 const randomA = [1.5, 1.5, 1.5];
 const maxV = [3, 3, 3];
-const maxSize = 10;
 
 export class Unit {
 
@@ -14,7 +13,7 @@ export class Unit {
         this.p = p;
         this.v = [0,0,0];
         this.a = [0,0,0];
-        this.color = army.color;
+        this.color = army.color;        
     }
 
     distance(otherUnit) {

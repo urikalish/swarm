@@ -15,9 +15,9 @@ export class Board {
         this.ctx.fillRect(Math.trunc(p[0]), Math.trunc(p[1]), size, size);    
     }
 
-    draw(p, color) {
+    draw(p, c) {
         const size = Math.trunc(p[2] / 10);
-        this.ctx.fillStyle = color;
+        this.ctx.fillStyle = `hsl(${c[0]},${c[1]}%,${c[2]}%)`;
         this.ctx.fillRect(Math.trunc(p[0]), Math.trunc(p[1]), size, size);
     }
     

@@ -55,7 +55,7 @@ export class Army {
             const oldP = [...u.p];
             const oldColor = u.color;
             u.move();
-            if (u.color !== oldColor || u.p.join() !== oldP.join()) {
+            if (u.p.join() !== oldP.join() || u.color.join() !== oldColor.join()) {
                 this.board.clear(oldP);
                 this.board.draw(u.p, u.color);
             }

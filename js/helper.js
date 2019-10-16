@@ -49,9 +49,10 @@ export class Helper {
 		r /= 255;
 		g /= 255;
 		b /= 255;
-		let max = Math.max(r, g, b), min = Math.min(r, g, b);
+		let max = Math.max(r, g, b);
+		let min = Math.min(r, g, b);
 		let h, s, l = (max + min) / 2;
-		if (max == min) {
+		if (max === min) {
 			h = s = 0; // achromatic
 		} else {
 			let d = max - min;
@@ -63,9 +64,9 @@ export class Helper {
 			}
 			h /= 6;
 		}
-		return [h, s, l];
+		return [Math.trunc(360*h), Math.trunc(s*100), Math.trunc(l*100)];
 	}
-	
+
     static hslToRgb(h, s, l) {
 		let r, g, b;
 		if (s == 0){
