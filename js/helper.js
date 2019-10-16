@@ -67,6 +67,10 @@ export class Helper {
 		return [Math.trunc(360*h), Math.trunc(s*100), Math.trunc(l*100)];
 	}
 
+	static strToHsl(str) {
+		return Helper.rgbToHsl(...Helper.strToRgb(str));
+	}
+
     static hslToRgb(h, s, l) {
 		let r, g, b;
 		if (s == 0){
