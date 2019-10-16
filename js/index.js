@@ -15,7 +15,7 @@ const initGame = () => {
             {
                 id: 1,
                 name: 'Player1',
-                color: Helper.strToHsl('#ffccdd')
+                color: Helper.strToHsl('#ff99aa')
             }
         ]
     );
