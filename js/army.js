@@ -2,7 +2,7 @@ import { Helper } from './helper.js';
 import { Unit } from './unit.js';
 
 const armySize = 100;
-const neighborsMinMax = [5, 25];
+const neighborsMinMax = [5, 15];
 
 export class Army {
 
@@ -55,7 +55,7 @@ export class Army {
             const oldP = [...u.p];
             const oldColor = u.color;
             u.move();
-            if (u.needRedraw(oldP, oldColor)) {
+            if (u.color !== oldColor || u.p.join() !== oldP.join()) {
                 this.board.clear(oldP);
                 this.board.draw(u.p, u.color);
             }

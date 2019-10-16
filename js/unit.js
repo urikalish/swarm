@@ -52,14 +52,4 @@ export class Unit {
         }
     }
 
-    needRedraw(oldP, oldColor) {
-        let isChanged = false;
-        for (let i = 0; i < 3; i++) {
-            if (Math.trunc(this.p[i]) !== Math.trunc(oldP[i])) {
-                isChanged = true;
-            }
-        }
-        return isChanged || (this.color !== oldColor);
-    }
-
 }
