@@ -1,4 +1,4 @@
-const boardSizes = [1200, 600, 100];
+const boardSizes = [800, 500, 100];
 const clearColor = '#000';
 
 export class Board {
