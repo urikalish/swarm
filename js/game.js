@@ -1,26 +1,20 @@
 import { Board } from './board.js';
 import { Player } from './player.js';
 
-let board;
-let players;
+export class Game {
 
-const init = () => {
-    board = new Board(document.getElementById('canvas'));
-    players = [
-        new Player(0, 'Player0', board),
-        new Player(1, 'Player1', board)
-    ];
-};
+    constructor(canvas, playerNames) {
+        this.board = new Board(canvas);
+        this.players = [
+            new Player(0, playerNames[0], this.board),
+            new Player(1, playerNames[1], this.board)
+        ];
+    }
 
-const step = () => {
-    players.forEach(player => {
-        player.step();
-    })
-    window.requestAnimationFrame(step);
-    // setTimeout(() => {
-    //     step();
-    // }, 0);
-};
+    step() {
+        this.players.forEach(player => {
+            player.step();
+        })
+    };
 
-init();
-step();
+}
