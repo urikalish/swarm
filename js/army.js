@@ -2,7 +2,7 @@ import { Helper } from './helper.js';
 import { Unit } from './unit.js';
 
 const armySize = 100;
-const neighborsMinMax = [5, 15];
+const neighborsMinMax = [10, 50];
 
 export class Army {
 
